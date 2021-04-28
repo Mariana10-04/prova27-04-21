@@ -3,13 +3,14 @@ package com.marianaa.prova2704.model;
 public class Filme {
 
     private int id;
-    private int CategoriaID;
+    private Categoria categoria;
     private String nome;
 
+    
     public Filme() {
     }
-    public Filme(int categoriaID, String nome) {
-        CategoriaID = categoriaID;
+    public Filme(Categoria categoria, String nome) {
+        this.categoria = categoria;
         this.nome = nome;
     }
     public int getId() {
@@ -18,11 +19,11 @@ public class Filme {
     public void setId(int id) {
         this.id = id;
     }
-    public int getCategoriaID() {
-        return CategoriaID;
+    public Categoria getCategoria() {
+        return categoria;
     }
-    public void setCategoriaID(int categoriaID) {
-        CategoriaID = categoriaID;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
     public String getNome() {
         return nome;
@@ -30,7 +31,5 @@ public class Filme {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    
     
 }

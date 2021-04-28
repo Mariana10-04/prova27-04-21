@@ -1,0 +1,9 @@
+com\marianaa\prova2704\controller\filmeController.class
+com\marianaa\prova2704\factory\ConnectionFactory.class
+com\marianaa\prova2704\dao\FilmeDao.class
+com\marianaa\prova2704\Resources.class
+com\marianaa\prova2704\controller\categoriaController.class
+com\marianaa\prova2704\model\Categoria.class
+com\marianaa\prova2704\Configuration.class
+com\marianaa\prova2704\model\Filme.class
+com\marianaa\prova2704\dao\CategoriaDAO.class

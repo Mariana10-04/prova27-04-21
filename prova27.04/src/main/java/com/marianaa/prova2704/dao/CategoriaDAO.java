@@ -63,5 +63,24 @@ public class CategoriaDAO {
             throw new RuntimeException(exception);
         }
     }
+
+    public Categoria findById(int id) {
+        String sql = "select * from categoria where id = ?;";
+        try {
+          PreparedStatement statement = connection.prepareStatement(sql);
+          statement.setInt(1, id);
+          ResultSet resultSet = statement.executeQuery();
+    
+          Categoria categoria = new Categoria();
+          while (resultSet.next()) {
+            categoria.setId(resultSet.getInt("id"));
+            categoria.setNome(resultSet.getString("nome"));
+        
+          }
+          return categoria;
+        } catch (SQLException e) {
+          throw new RuntimeException(e);
+        }
+      }
     
 }

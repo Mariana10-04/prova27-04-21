@@ -4,17 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.marianaa.prova2704.model.Categoria;
 import com.marianaa.prova2704.model.Filme;
+
 
 public class FilmeDao {
 
     public Connection connection;
 
     public void createFilmeTableNotExists(){
-        String sql = "create table if not exists filme(id int primary key auto_increment, CategoriaId int not null, nome varchar(100) not null;";
+        String sql = "create table if not exists filme(id int primary key auto_increment, CategoriaId int not null, nome varchar(100) not null, CONSTRAINT fk_idFilmeCategoria foreign key (categoriaId) references categoria(id);";
 
         try {
             PreparedStatement statement= connection.prepareStatement(sql);
@@ -30,11 +33,14 @@ public class FilmeDao {
         String sql = "insert into filme (CategoriaID, nome) values (?,?);";
 
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, filme.getCategoriaID());
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, filme.getCategoria().getId());
             statement.setString(2, filme.getNome());
             statement.execute();
-            statement.close();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            while(resultSet.next()){
+                filme.setId(resultSet.getInt(1));
+            }
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
@@ -52,10 +58,10 @@ public class FilmeDao {
 
             while(resultSet.next ()){
                 filme = new Filme();
-                filme.setId(resultSet.getInt("id"));
-                filme.setCategoriaID(resultSet.getInt("categoriaid"));
                 filme.setNome(resultSet.getString("nome"));
-
+                CategoriaDAO categoriaDAO = new CategoriaDAO();
+                Categoria categoria = categoriaDAO.findById(resultSet.getInt("categoriaId"));
+                filme.setCategoria(categoria);
                 filmes.add(filme);
             }
 
